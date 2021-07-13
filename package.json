@@ -4,7 +4,8 @@
   "description": "Sample WebdriverIO Project",
   "main": "index.js",
   "scripts": {
-    "test": "npx wdio run wdio.conf.js"
+    "test": "npx wdio run wdio.conf.js",
+    "report": "marge ./reports/wdio-ma-merged.json --reportTitle 'WDIOTestResult' && move mochawesome-report.html ./mochawesome-report"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,8 @@
     "@wdio/local-runner": "^7.7.4",
     "@wdio/mocha-framework": "^7.7.4",
     "@wdio/selenium-standalone-service": "^7.7.4",
-    "@wdio/spec-reporter": "^7.7.3"
+    "@wdio/spec-reporter": "^7.7.3",
+    "mochawesome-report-generator": "^3.1.5",
+    "wdio-mochawesome-reporter": "^4.0.0"
   }
 }

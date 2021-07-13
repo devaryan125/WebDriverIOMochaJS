@@ -57,7 +57,7 @@ exports.config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 5,
+        maxInstances: 2,
         //
         browserName: 'chrome',
         acceptInsecureCerts: true
@@ -73,7 +73,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'silent',
     //
     // Set specific log levels per logger
     // loggers:
@@ -135,7 +135,18 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: [
+        ['mochawesome', {
+            outputDir: './reports',
+            outputFileFormat: function (opts) {
+                return `results-${opts.cid}.${opts.capabilities}.json`
+            }
+        }]
+    ],
+    mochawesomeOpts: {
+        includeScreenshots: true,
+        screenshotUseRelativePath: true
+    },
 
 
     
@@ -269,8 +280,10 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: function(exitCode, config, capabilities, results) {
+        const mergeResults = require('wdio-mochawesome-reporter/mergeResults')
+        mergeResults('./reports', "results-*")
+    },
     /**
     * Gets executed when a refresh happens.
     * @param {String} oldSessionId session ID of the old session

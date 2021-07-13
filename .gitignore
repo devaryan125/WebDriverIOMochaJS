@@ -1,7 +1,7 @@
 node_modules/
-package-lock.json
-report/
+reports/
+mochawesome-report/
 allure-results/
 allure-report/
 debug.log
-Report/
+
